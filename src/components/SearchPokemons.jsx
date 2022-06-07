@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import { api } from "../service/api";
 import styled from "styled-components";
 import searchIcon from "../Assets/Images/searchIcon.svg";
@@ -78,7 +78,7 @@ export function SearchPokemons({ handleSearch }) {
         />
       </Search>
 
-      {/* Pesquisa */}
+      
       <Story>
         {pokemon ? (
           <>
@@ -99,3 +99,4 @@ export function SearchPokemons({ handleSearch }) {
     </SearchComponent>
   );
 }
+ */
