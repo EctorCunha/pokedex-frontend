@@ -1,77 +1,18 @@
 import { Box, Modal, Typography, Button } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
-
-const SearchComponent = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 3rem;
-  margin-top: 5rem;
-`;
-
-const Search = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.h2`
-  font-size: 3rem;
-  font-weight: normal;
-`;
-
-const Input = styled.input`
-  width: 65vw;
-  padding: 1rem;
-  border: 1px solid #efe8e8;
-  border-radius: 20px;
-  filter: drop-shadow(0px 4px 4px #bdb8b8);
-`;
-
-const InputButton = styled.input`
-  width: 5vw;
-  padding: 0.7rem;
-  border: 1px solid #0003;
-  border-radius: 7px;
-  margin-left: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: gray;
-  }
-`;
-
-const Buttons = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 15vw;
-  padding: 0.6rem;
-  background-color: green;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-`;
-
-const Card = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 180px;
-  background-color: aqua;
-  border-radius: 7px;
-`;
-
-const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.6rem;
-`;
+import "./pokemon";
+import {
+  Buttons,
+  Card,
+  Cards,
+  Input,
+  InputButton,
+  Search,
+  SearchComponent,
+  Title,
+  Story,
+} from "./pokemon";
 
 const style = {
   position: "absolute",
@@ -82,13 +23,12 @@ const style = {
   height: 350,
   bgcolor: "background.paper",
   border: "none",
-  borderRadius:'10px',
+  borderRadius: "10px",
   boxShadow: 1,
   p: 4,
 };
 
 export function AllPokemons() {
-
   //============= Estado para o dado principal
   const [pokemons, setPokemons] = useState([]);
   //============= Estado para filtros
@@ -103,11 +43,17 @@ export function AllPokemons() {
   const handleClose = () => setOpen(false);
 
   //     //============= Pesquisa
-    const [busca, setBusca] = useState("");
-      //Pesquisa
-    const pokemonFiltered = useMemo(() => {
-      return pokemons.filter((pokemon) => pokemon.includes(busca));
-    }, [busca]);
+  const [busca, setBusca] = useState("");
+  //Pesquisa
+  // const pokemonFiltered = useMemo(() => {
+  //   return pokemons.filter((pokemon) => pokemon.includes(busca));
+  // }, [busca]);
+
+  const handleSearch = (busca) => {
+    api.get(`/pokemon/${busca}`).then((res) => {
+      setBusca(res.data);
+    });
+  };
 
   //============= Função para junção e paginação dos pokemons
   function fetchPokemons() {
@@ -152,7 +98,7 @@ export function AllPokemons() {
     setFilters({ ...filters, offset: offset + limit });
   }
 
-  //============= Retorno
+  //============= Retorno do componente
   return (
     <div>
       <SearchComponent>
@@ -167,22 +113,18 @@ export function AllPokemons() {
           <InputButton
             type="button"
             value={"Procurar"}
-            // onClick={() => handleSearch(search)}
+            onClick={() => handleSearch(busca)}
           />
         </Search>
       </SearchComponent>
 
       <section>
         <Cards
-          style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)"}}
+          style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}
         >
           {pokemons.map((pokemon) => (
             <Card onClick={handleOpen}>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                hideBackdrop={true}
-              >
+              <Modal open={open} onClose={handleClose} hideBackdrop={true}>
                 <Box sx={style}>
                   <h3>{pokemon.name}</h3>
                   <img
@@ -206,6 +148,7 @@ export function AllPokemons() {
                 </Box>
               </Modal>
 
+              {/* Normal */}
               <h3>{pokemon.name}</h3>
               <img
                 style={{ margin: ".8rem 0" }}
@@ -228,7 +171,24 @@ export function AllPokemons() {
             </Card>
           ))}
 
-          {/* {pokemonFiltered.map((pokemon) => (
+          {/* <Story>
+            {handleSearch
+              ? pokemons.map((pokemon) => (
+                  <>
+                    <div>Nome: {pokemon.name}</div>
+                    <div>Peso: {pokemon.weight}</div>
+                    <img src={pokemon.id} alt={pokemon.name} />
+                    <p>Order: {pokemon.order}</p>
+                    <p>XP: {pokemon.base_experience}</p>
+                    <p>Altura: {pokemon.height}</p>
+                  </>
+                ))
+              : alert("Este pokemon não existe")}
+          </Story> */}
+          
+
+          {/* Filtrado */}
+          {/* {pokemonFiltered ? (pokemons.map((pokemon) => (
               <div key={pokemon.id}>
                 <h3>
                   {pokemon.name} - {pokemon.id}
@@ -240,7 +200,7 @@ export function AllPokemons() {
                   ))}
                 </ul>
               </div>
-            ))} */}
+            ))):("Pokemon não encontrado")} */}
         </Cards>
 
         <div

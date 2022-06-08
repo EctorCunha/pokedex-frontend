@@ -1,4 +1,4 @@
-import { AllPokemons } from "../components/AllPokemons";
+import { AllPokemons } from "../components/Pokemons";
 // import { SearchPokemons } from "../components/SearchPokemons";
 
 
