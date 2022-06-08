@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import bannerHome from "../../Assets/Images/bannerHome.svg";
 import './body'
-import { BodyStyle, Button, CallStyled, Subtitle, Title } from "./body";
+import { BannerPikachu, BannerStyle, BodyStyle, Button, CallStyled, Subtitle, Title } from "./body";
 
 
 
