@@ -81,6 +81,7 @@ export function AllPokemons() {
         });
       });
   }
+  //---------------------------------------------------- Que API complexa, viu?! -------------------------------------------------//
 
   //============= Componente de renderização (fica escutando)
   useEffect(() => {
