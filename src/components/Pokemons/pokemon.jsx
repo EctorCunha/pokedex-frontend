@@ -32,9 +32,9 @@ export const Input = styled.input`
 
 export const InputButton = styled.input`
   width: 5vw;
-  padding: 0.7rem;
+  padding: 1rem;
   border: 1px solid #0003;
-  border-radius: 7px;
+  border-radius: 20px;
   margin-left: 1rem;
   cursor: pointer;
 
